@@ -177,22 +177,30 @@ watch(
             v-if="activeTab === 'evolution'"
             class="flex flex-col gap-4 justify-center items-center flex-wrap"
           >
-            <div class="flex flex-row">
-              <div
-                v-for="evo in evolution"
-                :key="evo.name"
-                class="flex flex-col items-center gap-1"
-                @click="emit('update:viewPokemon', { url: evo.url })"
-              >
-                <img
-                  v-if="evo.image"
-                  :src="evo.image"
-                  :alt="evo.name"
-                  class="w-36 h-36 object-contain drop-shadow-md"
-                />
-              </div>
+            <div class="flex flex-row items-center gap-4">
+              <template v-for="(evo, index) in evolution" :key="evo.name">
+                <div
+                  class="flex flex-col items-center gap-1 cursor-pointer"
+                  @click="emit('update:viewPokemon', { url: evo.url })"
+                >
+                  <img
+                    v-if="evo.image"
+                    :src="evo.image"
+                    :alt="evo.name"
+                    class="w-36 h-36 object-contain drop-shadow-md"
+                  />
+                  <span class="capitalize font-semibold">{{ evo.name }}</span>
+                </div>
+                <i
+                  v-if="index < evolution.length - 1"
+                  class="fa-solid fa-arrow-right text-gray-500 text-2xl"
+                ></i>
+              </template>
             </div>
-            <div>Click pokemon to see detail</div>
+
+            <div class="text-sm text-gray-500 mt-2">
+              Click Pokémon to see detail
+            </div>
           </div>
 
           <div v-if="activeTab === 'moves'" class="grid grid-cols-2 gap-2">
